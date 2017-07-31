@@ -1,0 +1,134 @@
+{% extends "/landing/landing_base.html" %} {% block page_content %}
+<header role="banner" id="fh5co-header">
+    <div class="container">
+        <!-- <div class="row"> -->
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <!-- Mobile Toggle Menu Button -->
+                <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar"><i></i></a>
+                <a class="navbar-brand" href="/">FindMyReviewers</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="/" data-nav-section="home"><span>Home</span></a></li>
+                    <!--<li><a href="#" data-nav-section="work"><span>Work</span></a></li>
+                        <li><a href="#" data-nav-section="testimonials"><span>Testimonials</span></a></li>-->
+                    <li><a href="#" data-nav-section="recommend"><span>Result</span></a></li>
+                    <li><a href="#" data-nav-section="services"><span>Stats</span></a></li>
+                    <li><a href="#" data-nav-section="contact"><span>Contact</span></a></li>
+                </ul>
+            </div>
+        </nav>
+        <!-- </div> -->
+    </div>
+</header>
+<section id="fh5co-home" data-section="home" style="background-image: url(images/full_image_2.jpg); height: 500px !important;" data-stellar-background-ratio="0.5">
+    <div class="gradient"></div>
+    <div class="container">
+        <div class="text-wrap" style="height: 500px !important;">
+            <div class="text-inner">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="to-animate">Your Results</h1>
+                        <h2 class="to-animate">Based on your paper, we found the following potential reviewers for you.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slant"></div>
+</section>
+<div id="result-start" data-section="recommend">
+<section id="fh5co-recommend">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 section-heading text-center">
+                <h2 class="to-animate">Result for: {{ paper.title }}</h2>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 subtext to-animate">
+                        <h3>Based on {% for keyword in paper.keywords %}{{ keyword }}{% if not loop.last %},
+                        {% endif %}{% endfor %}.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="result-{{ paper.hash }}">
+            {% for three_reviewers in reviewers %}
+            <div class="row" style=" padding-bottom: 10%;">
+                {% for reviewer in three_reviewers %}
+                <div class="col-md-4">
+                    <div class="fh5co-person text-center to-animate">
+                        <figure><!--<img src="http://gravatar.css.network/avatar/{{ reviewer.email_hash }}" alt="Image">-->
+                        <img src="https://randomuser.me/api/portraits/men/{{ reviewer.first_name }}{{ reviewer.last_name }}.jpg">
+                        </figure>
+                        <h3>{{ reviewer.first_name }} {{ reviewer.last_name }}</h3>
+                        <span class="fh5co-position">{{ reviewer.institution }}</span>
+                        <p>{{ reviewer.bio }}</p>
+                        <p><a href="#" class="btn btn-primary">View Details</a></p>
+                        <span class="fh5co-position">Contact Info</span>
+                        <ul class="social social-circle">
+                            <!-- TODO: should hava a for statement here -->
+                            <li><a href="{# contact.url #}"><i class="icon-social-linkedin"></i></a></li>
+                            <!-- endfor -->
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+</div>
+<section id="fh5co-contact" data-section="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 section-heading text-center">
+                <h2 class="to-animate">Get In Touch</h2>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 subtext to-animate">
+                        <h3>Have any thing intresting to tell us? Drop us a message!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-bottom-padded-md">
+            <div class="col-md-6 to-animate">
+                <h3>Contact Info</h3>
+                <ul class="fh5co-contact-info">
+                    <li class="fh5co-contact-address ">
+                        <i class="icon-home"></i> 2001 Longxiang Blvd.<br>The Chinese University of Hong Kong, Shenzhen
+                    </li>
+                    <li><i class="icon-phone"></i> (123) 465-6789</li>
+                    <li><i class="icon-envelope"></i>yourfriends@findmyreviewers.com</li>
+                    <li><i class="icon-globe"></i> <a href="/" target="_blank">findmyreviewers.com</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6 to-animate">
+                <h3>Contact Form</h3>
+                <div class="form-group ">
+                    <label for="name" class="sr-only">Name</label>
+                    <input id="name" class="form-control" placeholder="Name" type="text">
+                </div>
+                <div class="form-group ">
+                    <label for="email" class="sr-only">Email</label>
+                    <input id="email" class="form-control" placeholder="Email" type="email">
+                </div>
+                <div class="form-group ">
+                    <label for="phone" class="sr-only">Phone</label>
+                    <input id="phone" class="form-control" placeholder="Phone" type="text">
+                </div>
+                <div class="form-group ">
+                    <label for="message" class="sr-only">Message</label>
+                    <textarea name="" id="message" cols="30" rows="5" class="form-control" placeholder="Message"></textarea>
+                </div>
+                <div class="form-group ">
+                    <input class="btn btn-primary btn-lg" value="Send Message" type="submit">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

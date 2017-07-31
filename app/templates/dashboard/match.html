@@ -1,0 +1,186 @@
+{% extends "/dashboard/base.html" %}
+{% block title %}Find Reviewers{% endblock %}
+{% block css %}
+    <!-- bootstrap-wysiwyg -->
+    <link href="{{ url_for('static', filename='vendors/google-code-prettify/bin/prettify.min.css') }}" rel="stylesheet">
+    <!-- Select2 -->
+    <link href="{{ url_for('static', filename='vendors/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    <!-- Switchery -->
+    <link href="{{ url_for('static', filename='vendors/switchery/dist/switchery.min.css') }}" rel="stylesheet">
+    <!-- starrr -->
+    <link href="{{ url_for('static', filename='vendors/starrr/dist/starrr.css') }}" rel="stylesheet">
+    <!-- bootstrap-daterangepicker -->
+    <link href="{{ url_for('static', filename='vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+{% endblock %}
+{% block page_content %}
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Find your reviewers</h3>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h2>Paper Details<small>your paper is used to match reviewers</small></h2>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <br/>
+                  <form class="form-horizontal form-label-left" action="{{ url_for('api.dashboard_handle_match') }}" method="post">
+
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Title</label>  <span class="required">*</span>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input type="text" name="title" class="form-control" placeholder="Title of your paper">
+                      </div>
+                    </div>
+<!--                     <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Multiple</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="select2_multiple form-control" multiple="multiple">
+                          <option>Choose option</option>
+                          <option>Option one</option>
+                          <option>Option two</option>
+                          <option>Option three</option>
+                          <option>Option four</option>
+                          <option>Option five</option>
+                          <option>Option six</option>
+                        </select>
+                      </div>
+                    </div> -->
+                    <div class="control-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                      Keywords  <span class="required">*</span>
+                      <br>
+                      <small class="text-navy">Case insensitive<br> Comma seperated</small>
+                      </label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <input id="tags_1" type="text" name="keywords" class="tags form-control" value="" />
+                        <div id="suggestions-container" style="position: relative; float: left; width: 250px; margin: 10px;"></div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Abstract <span class="required">*</span>
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <textarea class="form-control" name="abstract" rows="10" placeholder="The abastract of your paper."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Full Text
+                        </label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <textarea class="form-control" name="full_text" rows="10" placeholder="The full text of your paper."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-md-3 col-sm-3 col-xs-12 control-label">Algorithm
+                        <br>
+                        <small class="text-navy">Choose a matching algorithm</small>
+                      </label>
+
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        {% for db in keyword_dbs %}
+                        <div class="radio">
+                          <label>
+                            <input type="radio" class="flat" checked name="algorithm" value="keywords-{{ db }}"> Keyword-based: {{ db }}
+                          </label>
+                        </div>
+                        {% endfor %}
+                        {% for model in models %}
+                        <div class="radio">
+                          <label>
+                            <input type="radio" class="flat" name="algorithm" value="lda-{{ model }}"> LDA: {{ model }}
+                          </label>
+                        </div>
+                        {% endfor %}
+<!--                         <div class="radio">
+                          <label>
+                            <input type="radio" class="flat" name="iCheck" disabled="disabled"> Disabled
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" class="flat" name="iCheck3" disabled="disabled" checked> Disabled & Checked
+                          </label>
+                        </div> -->
+                      </div>
+                    </div>
+<!--                     <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12">Switch</label>
+                      <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div class="">
+                          <label>
+                            <input type="checkbox" class="js-switch" checked /> Checked
+                          </label>
+                        </div>
+                        <div class="">
+                          <label>
+                            <input type="checkbox" class="js-switch" /> Unchecked
+                          </label>
+                        </div>
+                        <div class="">
+                          <label>
+                            <input type="checkbox" class="js-switch" disabled="disabled" /> Disabled
+                          </label>
+                        </div>
+                        <div class="">
+                          <label>
+                            <input type="checkbox" class="js-switch" disabled="disabled" checked="checked" /> Disabled Checked
+                          </label>
+                        </div>
+                      </div>
+                    </div> -->
+
+
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                      <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                      </div>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+{% endblock %}
+{% block js %}
+    <!-- bootstrap-progressbar -->
+    <script src="{{ url_for('static', filename='vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
+    <!-- iCheck -->
+    <script src="{{ url_for('static', filename='vendors/iCheck/icheck.min.js') }}"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="{{ url_for('static', filename='vendors/moment/min/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <!-- bootstrap-wysiwyg -->
+    <script src="{{ url_for('static', filename='vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/jquery.hotkeys/jquery.hotkeys.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/google-code-prettify/src/prettify.js') }}"></script>
+    <!-- jQuery Tags Input -->
+    <script src="{{ url_for('static', filename='vendors/jquery.tagsinput/src/jquery.tagsinput.js') }}"></script>
+    <!-- Switchery -->
+    <script src="{{ url_for('static', filename='vendors/switchery/dist/switchery.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ url_for('static', filename='vendors/select2/dist/js/select2.full.min.js') }}"></script>
+    <!-- Parsley -->
+    <script src="{{ url_for('static', filename='vendors/parsleyjs/dist/parsley.min.js') }}"></script>
+    <!-- Autosize -->
+    <script src="{{ url_for('static', filename='vendors/autosize/dist/autosize.min.js') }}"></script>
+    <!-- jQuery autocomplete -->
+    <script src="{{ url_for('static', filename='vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js') }}"></script>
+    <!-- starrr -->
+    <script src="{{ url_for('static', filename='vendors/starrr/dist/starrr.js') }}"></script>
+    <!-- Custom Theme Scripts -->
+{% endblock %}

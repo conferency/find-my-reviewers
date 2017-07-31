@@ -1,0 +1,63 @@
+{% extends "/landing/landing_base.html" %}
+{% block title %}Login{% endblock %}
+{% block page_content %}
+<header role="banner" id="fh5co-header">
+    <div class="container">
+        <!-- <div class="row"> -->
+        <nav class="navbar navbar-default">
+            <div class="navbar-header">
+                <!-- Mobile Toggle Menu Button -->
+                <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar"><i></i></a>
+                <a class="navbar-brand" href="/"><img src="/static/images/FMRLogo-black.png" style="
+height: 25px;" class=""></a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a onclick="lock.show();"><span>Login</span></a></li>
+                </ul>
+            </div>
+        </nav>
+        <!-- </div> -->
+    </div>
+</header>
+<section id="fh5co-home" data-section="home" style="background-image: url(images/full_image_2.jpg); height: 500px !important;" data-stellar-background-ratio="0.5">
+    <div class="gradient"></div>
+    <div class="container">
+        <div class="text-wrap" style="height: 500px !important;">
+            <div class="text-inner">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="to-animate">Access Denied</h1>
+                        <h2 class="to-animate">You need to login in order to access this page.</h2>
+                        <a class="btn btn-primary" style="margin-top: 20px;" onclick="lock.show();">Login</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="slant"></div>
+</section>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+        <script>
+      var lock = new Auth0Lock('A9GoeDXxltXAM6om4liwL4vBpEORBmB6', 'findmyreviewers.auth0.com', {
+        auth: {
+          redirectUrl: '{{ auth0['base_uri'] }}/callback',
+          responseType: 'code',
+          params: {
+            scope: 'openid email' // Learn about scopes: https://auth0.com/docs/scopes
+          }
+        }
+      });
+      lock.show();
+    </script>
+    <style>
+    .auth0-lock.auth0-lock .auth0-lock-tabs li.auth0-lock-tabs-current a{
+        color: #5c666f !important;
+    }
+    </style>
+{% endblock %}

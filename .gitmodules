@@ -1,0 +1,3 @@
+[submodule "gentelella"]
+	path = gentelella
+	url = https://github.com/puikinsh/gentelella.git

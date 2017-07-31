@@ -1,0 +1,189 @@
+{% extends "/dashboard/base.html" %}
+{% block title %}Results{% endblock %}
+{% block css %}
+    <style>
+        table.tile_info td p {
+
+        }
+    </style>
+{% endblock %}
+{% block page_content %}
+    <!-- page content -->
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Results
+                        <small>your saved matching results</small>
+                    </h3>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>{{ result.title }}
+                                <small>{{ result.algorithm }}</small>
+                            </h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <p class="text-muted font-13 m-b-30">
+                                The followings are the reviewers matched in our database.
+                            </p>
+                            {% if reviewers %}
+                                <table id="datatable-responsive"
+                                       class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
+                                       width="100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Score</th>
+                                        <th>Institution</th>
+                                        <th>Keywords</th>
+                                        <th>Vitae</th>
+                                        <th>Action</th>
+                                        <!-- <th>Confidence</th> -->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for reviewer_id, reviewer in reviewers.iteritems() %}
+                                        <tr>
+                                            <td>
+                                                <a href="{{ url_for('main.result_author', result_id=result.id, author_id = reviewer_id) }}">{{ reviewer['profile']['first_name'] }} {{ reviewer['profile']['last_name'] }}
+                                            </td>
+                                            <td class="sorting_desc">{{ reviewer['score'] | round(3) }}</td>
+                                            <!-- TODO: add the middle name -->
+                                            <td>{{ reviewer['profile']['institution'] }}</td>
+                                            <td>{{ reviewer['keywords'] | join(', ') }}</td>
+                                            <td>{{ reviewer['profile']['vitae'] }}</td>
+                                            <td>
+                                                <a href="{{ url_for('main.result_author', result_id=result.id, author_id = reviewer_id) }}">View
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <p> No result found.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% if matched_topics %}
+                    <div class="col-md-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>LDA Profile</h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content" style="overflow: scroll;">
+                                <table class="" style="width:100%; word-wrap: break-word;">
+                                    <tr>
+                                        <td>
+                                            <canvas id="canvasDoughnut" height="140" width="250"
+                                                    style="margin: auto;"></canvas>
+                                        </td>
+                                        <td>
+                                            <table class="tile_info">
+                                            <tr>
+                                                <th>
+                                                    <p>Topic Terms</p>
+                                                </th>
+                                                <th>
+                                                    <p>Confidence Level</p>
+                                                </th>
+                                            </tr>
+                                                {% for topic in matched_topics %}
+                                                    <tr>
+                                                        <td>
+                                                            <p style="white-space: normal;">
+                                                                <i class="fa fa-square"
+                                                                  style="color: {{ colors[loop.index0] }}"></i>{{ loop.index }}. {{ topic[0] }}
+                                                            </p>
+                                                        </td>
+                                                        <td>{{ topic[1] - 1 }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="col-md-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Your Submission
+                                <small>we gave the above recommendation according to your submission:</small>
+                            </h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <h1>{{ submission['title'] }}</h1>
+                            <h2>Keywords</h2>
+                            {{ submission['keywords'] }}
+                            <h2>Abstract</h2>
+                            {% if submission['abstract'] %}
+                                <p>{{ submission['abstract'] }}</p>
+                            {% else %}
+                                <p>You didn't provide abstract.</p>
+                            {% endif %}
+                            <h2>Full Text</h2>
+                            {% if submission['full_text'] %}
+                                <p>{{ submission['full_text'] }}</p>
+                            {% else %}
+                                <p>You didn't provide full text.</p>
+                            {% endif %}
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page content -->
+{% endblock %}
+{% block js %}
+    <script src="{{ url_for('static', filename='vendors/Chart.js/dist/Chart.min.js') }}"></script>
+    <script>
+        {% if matched_topics %}
+            var colors = ['#a50026', '#d73027', '#f46d43', '#fdae61', '#fee08b', '#ffffbf', '#d9ef8b', '#a6d96a', '#66bd63', '#1a9850', '#006837']
+            var labels = [{% for topic in matched_topics %}"{{ loop.index }}",{% endfor %}]
+            var confidence = [{% for topic in matched_topics %}{{ topic[1] - 1 | round() }}, {% endfor %}]
+            var chart_doughnut_settings = {
+                type: 'doughnut',
+                tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: confidence,
+                        backgroundColor: colors,
+                        hoverBackgroundColor: colors
+                    }]
+                },
+                options: {
+                    legend: true,
+                    responsive: true
+                }
+            }
+
+            $('#canvasDoughnut').each(function () {
+
+                var chart_element = $(this);
+                var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
+
+            });
+        {% endif %}
+        $(document).ready(function () {
+            $('#datatable-responsive').DataTable({
+                "order": [[1, "desc"]]
+            });
+        });
+    </script>
+{% endblock %}

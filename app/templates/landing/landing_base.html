@@ -1,0 +1,157 @@
+{% import "_macros.html" as macros %}
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- BASIC INFO -->
+    <title>{% block title %}{% endblock %} - Findmyreviewers.com</title>
+    <meta name="author" content="Findmyreviewers.com">
+    <meta name="keywords" content="find reviewers, paper, peer review">
+    <meta name="description" content="Findmyreviewers.com: Review Made Easy">
+    <!-- FAVICONS -->
+    {# TODO: add favicon #}
+    <link rel="icon" href=""> {% block head %}
+    <!-- LIBRARIES CSS -->
+    <link href="{{ url_for('static', filename='css/animate.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/icomoon.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/simple-line-icons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/magnific-popup.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/blue.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/toastr.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/dropzone.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/sweetalert.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/taggle.css') }}" rel="stylesheet">
+    <!-- SPECIFIC CSS -->
+{% endblock %}
+</head>
+
+<body>
+<div id="document" class="document">
+    {% block page_content %} {% endblock %}
+    <!-- FOOTER
+================================= -->
+    <footer id="footer" role="contentinfo">
+        <a href="#" class="gotop js-gotop"><i class="icon-arrow-up2"></i></a>
+        <div class="container" style="margin-top: 20px;">
+            <div class="">
+                <div class="col-md-12 text-center">
+                    <p> Made with ❤️ in Shenzhen. </p>
+                    <p>&copy; Findmyreviewers.com All Rights Reserved. <br>
+                        <small>Template by <a href="http://freehtml5.co/" target="_blank">FREEHTML5.co</a>
+                        Images: <a href="https://unsplash.com" target="_blank">Unsplash</a>
+                    </p>
+                </div>
+            </div>
+            {#<div class="row">
+                <div class="col-md-12 text-center">
+                    <ul class="social social-circle">
+                        <li><a href="#"><i class="icon-twitter"></i></a></li>
+                        <li><a href="#"><i class="icon-facebook"></i></a></li>
+                        <li><a href="#"><i class="icon-youtube"></i></a></li>
+                    </ul>
+                </div>
+            </div>#}
+        </div>
+    </footer>
+</div>
+{% block scripts %}
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+    <!-- LIBRARIES JS
+    ================================= -->
+    <script src="{{ url_for('static', filename='js/modernizr-2.6.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.easing.1.3.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.stellar.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.countTo.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/magnific-popup-options.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/toastr.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dropzone.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/sweetalert.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/taggle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/initial.min.js') }}"></script>
+    <script src="https://cdn.auth0.com/js/lock/10.9.1/lock.min.js"></script>
+
+    <!-- Main JS (Do not remove) -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        if (document.location.hostname == "findmyreviewers.com" || document.location.hostname == "www.findmyreviewers.com") {
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-86300030-1', 'auto');
+            ga('send', 'pageview');
+        } else {
+            console.log("Running non-production google analytics replacement now");
+        }
+    </script>
+    <script src="{{ url_for('static', filename='js/landing.js') }}"></script>
+    <script>
+        taggle = new Taggle('keywords-input', {
+            // tags: ["important keyword", "secondary keyword"],
+            // TODO: Autocomplete, see https://sean.is/poppin/tags/
+            duplicateTagClass: 'bounce',
+            placeholder: "Click here to enter keywords"
+        });
+
+        function post_keywords() {
+            checkProcess(taggle.getTagValues().toString(), "/api/get_result/keywords/")
+        }
+
+        Dropzone.options.landingdropzone = {
+            maxFiles: 1,
+            maxfilesexceeded: function (file) {
+                this.removeAllFiles();
+                this.addFile(file);
+            },
+            accept: function (file, done) {
+                var thumbnail = $('.dropzone .dz-preview.dz-file-preview .dz-image:last');
+                switch (file.type) {
+                    case 'application/pdf':
+                        thumbnail.css('background', 'url({{ url_for('static', filename='images/pdf.svg') }})');
+                        break;
+                }
+
+                done();
+            },
+            dictDefaultMessage: "Drop files here or click to upload.",
+            acceptedFiles: ".pdf",
+            init: function () {
+                this.on("success", function (file, server_response) {
+                    var response = JSON.parse(JSON.stringify(server_response));
+                    var paper_hash = response["file_hash"];
+                    // TODO: Call API
+                    $("#upload-message").hide();
+                    $("#please-wait").show();
+                    checkProcess(paper_hash, "/api/get_result/");
+                })
+            }
+        };
+    </script>
+{% endblock %}
+</body>
+
+</html>

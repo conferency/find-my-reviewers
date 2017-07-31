@@ -1,0 +1,29 @@
+{% macro handle_notifications(flashed_messages) -%}
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "progressBar": true,
+            "positionClass": "toast-top-center",
+            "onclick": null,
+            "showDuration": "700",
+            "hideDuration": "1000",
+            "timeOut": "4000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "slideDown",
+            "hideMethod": "fadeOut"
+        }
+
+        {% for category, message in flashed_messages %}
+            var toastr_category = '{{ category }}';
+
+            if (toastr_category === 'message') {
+                toastr_category = 'info';
+            }
+
+            toastr[toastr_category]('{{message}}');
+        {% endfor %}
+    </script>
+{%- endmacro %}

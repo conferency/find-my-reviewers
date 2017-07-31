@@ -1,0 +1,58 @@
+<section id="fh5co-recommend">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 section-heading text-center">
+                <h2 class="to-animate">Your Results</h2>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 subtext to-animate">
+                        <h3>According to your paper, we recommend {{ number_of_reviewers }} reviewers for you.<br>Want to further customise and save your search?</h3>
+
+                        <a onclick="lock.show();" class="btn btn-primary">Login with Google Account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="result-{{ file_hash }}">
+            {% for three_reviewers in reviewers %}
+                <div class="row" style=" padding-bottom: 10%;">
+                    {% for reviewer in three_reviewers %}
+                        <div class="col-md-4">
+                            <div class="fh5co-person text-center to-animate">
+                                <figure>
+                                    <!--<img src="http://gravatar.css.network/avatar/{{ reviewer.email_hash }}" alt="Image">-->
+                                    {% if reviewer.avatar_url %}
+                                        <div class="avatar"
+                                             style="background: url({{ reviewer.avatar_url }}) 50% 50% no-repeat;"></div>
+                                    {% else %}
+                                        <img data-name="{{ reviewer.first_name[0] }}{{ reviewer.last_name[0] }}"
+                                             class="initial avatar"/>
+                                    {% endif %}
+                                </figure>
+                                <h3>{{ reviewer.first_name }} {{ reviewer.last_name }}</h3>
+                                {% if reviewer.institution %}
+                                    <span class="fh5co-position">{{ reviewer.institution }}</span>
+                                {% else %}
+                                    <span class="fh5co-position"> </span>
+                                {% endif %}
+                                    <span class="fh5co-position">Score: {{ reviewer.score }}</span>
+                                <p>{{ reviewer.bio }}</p>
+{#                                <p><a href="#" class="btn btn-primary">View Details</a></p>#}
+                                {% if reviewer.email %}
+                                    <span class="fh5co-position">Contact Info</span>
+                                    <ul class="social social-circle">
+                                        <!-- TODO: should have a for statement here -->
+
+                                        <li><a href="mailto:{{ reviewer.email }}"><i class="icon-envelope-open"></i></a>
+                                        </li>
+
+                                        <!-- endfor -->
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
