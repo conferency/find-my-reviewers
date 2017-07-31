@@ -1,5 +1,7 @@
 # Findmyreviewers
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/206da692fc274d868123b537d5a5c1a3)](https://www.codacy.com/app/alanzchen/find-my-reviewers?utm_source=github.com&utm_medium=referral&utm_content=conferency/find-my-reviewers&utm_campaign=Badge_Grade) [![Documentation Status](https://readthedocs.org/projects/findmyreviewers/badge/?version=latest)](http://findmyreviewers.readthedocs.io/en/latest/?badge=latest)
+
 Findmyreviewers (FMR in short) is an open-source project that extracts *topics* from a piece of text using trained LDA models and tries to find best matching scholars from a pool of scholars.
 
 Under the hood, it uses LDA models to extract *topics* and tries to find a set of best matches of reviewers.
@@ -65,7 +67,7 @@ To access the dashboard, please visit:
 
 We have a rough documents available in the `/docs` folder.
 
-You can also checkout an online version at [findmyreviwers.surge.sh](https://findmyreviwers.surge.sh).
+You can also checkout an online version at [http://findmyreviewers.readthedocs.io](http://findmyreviewers.readthedocs.io).
 
 There are also some jupyter notebooks in the `/tutorial` folder. They cover:
 
