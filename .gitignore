@@ -23,6 +23,7 @@ __pycache__
 trained/*
 databases/*
 !databases/demo*
+!trained/README.md
 
 # Installer logs
 pip-log.txt
