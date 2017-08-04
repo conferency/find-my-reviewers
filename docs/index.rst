@@ -16,7 +16,6 @@ Please refer to following documents for more details:
 
 .. toctree::
    :maxdepth: 2
-   :caption: Table of Contents:
 
    installation
    configuration

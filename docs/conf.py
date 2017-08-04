@@ -161,6 +161,7 @@ texinfo_documents = [
 
 html_theme_options = {
     'logo': 'logo.png',
+    'description': 'Review made easy',
     'github_user': 'conferency',
     'github_repo': 'find-my-reviewer',
     'fixed_sidebar': True,
