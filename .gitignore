@@ -24,6 +24,7 @@ trained/*
 databases/*
 !databases/demo*
 !trained/README.md
+!trained/download.py
 
 # Installer logs
 pip-log.txt
