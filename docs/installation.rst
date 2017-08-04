@@ -40,10 +40,10 @@ Downloading Demo Models
 
 Since our trained models contain intermediate data that allows you to train it further with new corpora, their sizes are larger than the size GitHub LFS is willing to handle.
 
-To download the demo models, in the `trained` folder, run:
+To download the demo models, in the ``trained`` folder, run:
 
 ::
-
+	$ cd trained
 	$ python download.py
 
 For detailed change log of our trained model, see ``trained/README.md``.

@@ -7,7 +7,7 @@ files = {
     "demo.ldamodel.id2word": "0B28rFtb9-7L7bEt2b01ROFBuYm8",
     "demo.ldamodel.expElogbeta.npy": "0B28rFtb9-7L7QnloRWx1V0NpMFE",
     "demo.ldamodel": "0B28rFtb9-7L7eHlvQ3RyZm9WT00",
-    "demo.authors.json": "0B28rFtb9-7L7eDZ5YjVOMWlNLWM"
+    "demo.ldamodel.json": "0B28rFtb9-7L7eDZ5YjVOMWlNLWM"
 }
 
 
