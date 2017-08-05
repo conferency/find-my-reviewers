@@ -36,12 +36,20 @@ Install packages:
 $ pip install -r requirements.txt
 ```
 
+Download demo models:
+
+```
+$ cd trained
+$ python download.py
+$ cd ..
+```
+
 ### Running the server
 
 Initialize web app database:
 
 ```
-$ python manage.py createtable
+$ python manage.py create_table
 ```
 
 Run the web app server:
