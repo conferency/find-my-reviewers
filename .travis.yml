@@ -6,5 +6,5 @@ install:
   - cd trained
   - python download.py
   - cd ..
-  - python manage.py createtable
+  - python manage.py create_table
 script: python manage.py runserver
