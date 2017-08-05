@@ -164,8 +164,8 @@ html_theme_options = {
     'description': 'Review made easy',
     'github_user': 'conferency',
     'github_repo': 'find-my-reviewer',
-    'fixed_sidebar': True,
-    'github_banner': True,
+    'github_banner': 'true',
+    'travis_button': 'true'
 }
 
 
