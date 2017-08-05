@@ -33,7 +33,7 @@ Initialize the tables in the web app database:
 
 ::
 
-	$ python manage.py createtable
+	$ python manage.py create_table
 
 Downloading Demo Models
 -----------------------

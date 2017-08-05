@@ -7,4 +7,4 @@ install:
   - python download.py
   - cd ..
   - python manage.py create_table
-script: python manage.py runserver
+script: python -m unittest tests.basic
