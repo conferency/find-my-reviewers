@@ -3,6 +3,8 @@ python:
   - "2.7"
 install:
   - pip install -r requirements.txt
-  - python manage.py
-  - python manage.py createtable
-script: python manage.py runserver
+  - cd trained
+  - python download.py
+  - cd ..
+  - python manage.py create_table
+script: python -m unittest tests.basic

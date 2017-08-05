@@ -9,8 +9,10 @@ Therefore we put them on Google Drive:
 ## Instruction
 
 1. Download all the files inside the [shared folder](https://drive.google.com/drive/folders/0B28rFtb9-7L7SzRFY19pNVVidG8?usp=sharing).
-2. Put them in the `trained` folder (this folder).
-3. Now it should work with the default demo.
+	-  **(Recommended)**
+	Run `python download.py`. Sit and relax.
+	-  (Alternative) Manually download all the files in the shared folder and rename them to `demo.*`.
+2. Now it should work with the default configuration.
 
 ## Change Log
 
@@ -19,3 +21,4 @@ Note that we may continuously refine our demo model. All the changes will be ava
 ### 2017-07-31
 
 - Init.
+

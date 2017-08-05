@@ -1,6 +1,6 @@
 # Findmyreviewers
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/206da692fc274d868123b537d5a5c1a3)](https://www.codacy.com/app/alanzchen/find-my-reviewers?utm_source=github.com&utm_medium=referral&utm_content=conferency/find-my-reviewers&utm_campaign=Badge_Grade) [![Documentation Status](https://readthedocs.org/projects/findmyreviewers/badge/?version=latest)](http://findmyreviewers.readthedocs.io/en/latest/?badge=latest)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/206da692fc274d868123b537d5a5c1a3)](https://www.codacy.com/app/alanzchen/find-my-reviewers?utm_source=github.com&utm_medium=referral&utm_content=conferency/find-my-reviewers&utm_campaign=Badge_Grade) [![Documentation Status](https://readthedocs.org/projects/findmyreviewers/badge/?version=latest)](http://findmyreviewers.readthedocs.io/en/latest/?badge=latest) [![Build Status](https://travis-ci.org/conferency/find-my-reviewers.svg?branch=master)](https://travis-ci.org/conferency/find-my-reviewers)
 
 Findmyreviewers (FMR in short) is an open-source project that extracts *topics* from a piece of text using trained LDA models and tries to find best matching scholars from a pool of scholars.
 
@@ -36,12 +36,20 @@ Install packages:
 $ pip install -r requirements.txt
 ```
 
+Download demo models:
+
+```
+$ cd trained
+$ python download.py
+$ cd ..
+```
+
 ### Running the server
 
 Initialize web app database:
 
 ```
-$ python manage.py createtable
+$ python manage.py create_table
 ```
 
 Run the web app server:

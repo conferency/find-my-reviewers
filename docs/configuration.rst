@@ -59,8 +59,8 @@ A working LDA model is composed with the following components:
 
 1. Trained LDA model (``.ldamodel`` file and its companions) generated
    by ``gensim``.
-2. Author profile vector library. (a pickle file ``.ldamodel.pkl`` that
-   stores the LDA topics profile of each authors in the database).
+2. Author profile vector library. (a JSON file ``.ldamodel.json`` that
+   stores the LDA topics vectors of each authors in the database).
 3. Corresponding paper database.
 
 Trained LDA model
@@ -101,9 +101,8 @@ a corresponding :ref:`Paper Database`.
 Author Profile Vector Library
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You will also need your generated author's profile vector library
-``aisnet_300.ldamodel.json``. Please refer the revelent section for more details
-about this pickle file.
+You will also need your generated author's profile vector pool
+``aisnet_300.ldamodel.json``. This pool of scholars will act as the pool of scholars to be matched from when you feed a new data to the LDA model.
 
 Paper Database
 ^^^^^^^^^^^^^^
