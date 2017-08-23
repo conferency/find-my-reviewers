@@ -33,7 +33,7 @@ Initialize the tables in the web app database:
 
 ::
 
-	$ python manage.py create_table
+    $ python manage.py create_table
 
 Downloading Demo Models
 -----------------------
@@ -43,8 +43,9 @@ Since our trained models contain intermediate data that allows you to train it f
 To download the demo models, in the ``trained`` folder, run:
 
 ::
-	$ cd trained
-	$ python download.py
+
+    $ cd trained
+    $ python download.py
 
 For detailed change log of our trained model, see ``trained/README.md``.
 

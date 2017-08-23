@@ -23,7 +23,6 @@ def dashboard_handle_match():
     :return: redirect the user to the result page.
     """
     user = session['profile']
-    print user
     form = request.form
     if form['algorithm'].startswith("keywords"):
         # Using keywords
@@ -238,7 +237,6 @@ def pdf_match(file_hash, model=None):
     total_list = []
     for author in result:
         a = Reviewer(result[author])
-        print a.last_name
         if a.valid:
             total_list.append(a)
     return total_list
@@ -260,25 +258,26 @@ def text_match(text, model=None):
     total_list = []
     for author in result:
         a = Reviewer(result[author])
-        print a.last_name
         if a.valid:
             total_list.append(a)
     return total_list
 
 
-def keyword_match(keywords):
+def keyword_match(keywords, db_name=None):
 
     """
     This function is called when a visitor entered a specific list of keywords.
-    :param keywords: A list of keyword strings.
+    :param keywords: a list of keyword strings.
+    :param db_name: name of the database to be used
     :return: a list of Reviewer object.
     """
 
-    response = match_by_keyword(keywords)
+    if not db_name:
+        db_name = current_app.config['DEFAULT_DB']
+    response = match_by_keyword(keywords, db_name)
     total_list = []
     for author in response:
         a = Reviewer(author)
-        print a.last_name
         if a.valid:
             total_list.append(a)
     return total_list
