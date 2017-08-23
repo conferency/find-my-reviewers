@@ -7,8 +7,8 @@ class Config:
 
     LAZYLOAD_LDA = False
     ALLOW_ANON = True
-    DEFAULT_LDA_MODEL = 'Association of Information System (500)'
-
+    DEFAULT_LDA_MODEL = 'Demo'
+    DEFAULT_DB = 'Demo Keyword-based Model'
     # Flask-Uploads configs - used in /app/__init__.py
     # the names has the format: UPLOADED_[]_DEST defined by Flask-Uploads
     UPLOADED_PAPERS_DEST = os.environ.get(

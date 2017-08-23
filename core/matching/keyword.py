@@ -31,7 +31,6 @@ def match_by_keyword(input_list, db_name, is_json=False):
         Score.update({i: score})
     Score = Series(Score)
 
-
     authors = {}
     for author_id in aid:
         profile = Author.ix[author_id].to_dict()
@@ -42,15 +41,15 @@ def match_by_keyword(input_list, db_name, is_json=False):
         for document_id in documents_id:
             document = Document.ix[document_id].to_dict()
             document['id'] = int(document['id'])
-            document['source_id'] = int(document['source_id'])
             documents.append(document)
         score = Score.ix[author_id]
 
-        author = {}
-        author['score'] = score
-        author['profile'] = profile
-        author['keywords'] = keywords
-        author['documents'] = documents
+        author = {
+            'score': score,
+            'profile': profile,
+            'keywords': keywords,
+            'documents': documents,
+        }
         authors[profile['id']] = author
     print input_list
     print len(authors)
