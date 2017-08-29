@@ -81,7 +81,6 @@ class LdaModelWrapper:
 
         if not models:
             self.__init__(self.filename, force_load=True)
-        print(text)
         vec = self.tokenize(text)
         print("BoW:")
         print(vec)
@@ -102,8 +101,10 @@ class LdaModelWrapper:
 
         :return: a NumPy array of topics IDs and their confidence levels.
         """
-
-        author = self.authors_lib[author_id]
+        try:
+            author = self.authors_lib[author_id]
+        except KeyError:
+            author = self.authors_lib[str(author_id)]
         top_topics = []
         for topic_id, confidence in enumerate(author):
             if confidence > 1:
