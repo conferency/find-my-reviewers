@@ -14,9 +14,9 @@ Databases and Models
 There are two kinds of databases used in Findmyreveiwers, both of which are in
 sqlite format:
 
-1. Web App Database. It is used to store users, results and other
+1. :ref:`Web App Database`. It is used to store users, results and other
    miscellaneous informations.
-2. Paper Databases. These databases are used for matching reviewers,
+2. :ref:`Paper Databases`. These databases are used for matching reviewers,
    both for keyword-based algorithm and LDA models.
 
 Web App Database
@@ -29,12 +29,6 @@ This database will be automatically generated upon the first run.
 
 In particular, it will appear as ``data-dev.sqlite`` in the project root
 directory.
-
-Paper Databases
-~~~~~~~~~~~~~~~
-
-Besides the database used by the web app, our more important databases
-are those who store information about papers and authors.
 
 Keyword-based Databases
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -104,8 +98,8 @@ Author Profile Vector Library
 You will also need your generated author's profile vector pool
 ``aisnet_300.ldamodel.json``. This pool of scholars will act as the pool of scholars to be matched from when you feed a new data to the LDA model.
 
-Paper Database
-^^^^^^^^^^^^^^
+Paper Databases
+^^^^^^^^^^^^^^^
 
 The LDA model also relies on a paper database to give details of the
 matching results. Findmyreviwers will automatically find the database in
@@ -125,7 +119,7 @@ By default, in the  ``config.py`` the option ``ALLOW_ANON`` is enabled. It will
 allow any users to visit the dashboard anonymously, and they all share the same
 account. It is intended for development and ad hoc.
 
-However, in production, we highly recommend disabling ``ALLOW_ANON`` and
+However, for production, we highly recommend disabling ``ALLOW_ANON`` and
 configure Auth0.
 
 We use Auth0 to be our authentication system. You will need a free

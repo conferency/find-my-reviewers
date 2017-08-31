@@ -3,7 +3,7 @@ from . import main
 
 
 @main.app_errorhandler(403)
-def forbidden(e):
+def forbidden(e=None):
     if request.accept_mimetypes.accept_json and \
             not request.accept_mimetypes.accept_html:
         response = jsonify({'error': 'forbidden'})
@@ -13,7 +13,7 @@ def forbidden(e):
 
 
 @main.app_errorhandler(404)
-def page_not_found(e):
+def page_not_found(e=None):
     if request.accept_mimetypes.accept_json and \
             not request.accept_mimetypes.accept_html:
         response = jsonify({'error': 'not found'})
@@ -23,7 +23,7 @@ def page_not_found(e):
 
 
 @main.app_errorhandler(500)
-def internal_server_error(e):
+def internal_server_error(e=None):
     if request.accept_mimetypes.accept_json and \
             not request.accept_mimetypes.accept_html:
         response = jsonify({'error': 'internal server error'})

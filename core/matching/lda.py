@@ -85,8 +85,9 @@ def match_by_lda(text, model_name, top=50, detailed=True, scoring_impl="default"
     print("Matching by LDA")
 
     def update_author_vector(vec, doc_vec):
+        vec = [i for i in vec]  # weird, why on earth this could be immutable and I have to create a copy?
         for topic_id, confidence in zip(doc_vec['topic_id'], doc_vec['confidence']):
-            vec[topic_id] += confidence
+            vec[topic_id] = vec[topic_id] + confidence
         return vec
 
     model = models[model_name]
@@ -97,9 +98,12 @@ def match_by_lda(text, model_name, top=50, detailed=True, scoring_impl="default"
     for author_id_ in model.authors_lib:
         results.append([author_id_, score(model.authors_lib[author_id_], paper_vec, scoring_impl)])
     results.sort(key=lambda tup: tup[1], reverse=True)
+    print("Base:", base)
+    print("paper_vec: ")
+    print(paper_vec)
     matched_topics = [(model.get_topic_in_string(i), v) for i, v in enumerate(paper_vec) if v > base]
     matched_topics.sort(key=lambda tup: tup[1], reverse=True)
-    print("Demo: matched_topics:")
+    print("matched_topics:")
     print(matched_topics)
     if detailed:
         return detailed_results(results[:top], model_name), matched_topics

@@ -105,7 +105,7 @@
                                                                   style="color: {{ colors[loop.index0] }}"></i>{{ loop.index }}. {{ topic[0] }}
                                                             </p>
                                                         </td>
-                                                        <td>{{ topic[1] - 1 }}</td>
+                                                        <td>{{ topic[1] }}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </table>
@@ -155,7 +155,7 @@
         {% if matched_topics %}
             var colors = ['#a50026', '#d73027', '#f46d43', '#fdae61', '#fee08b', '#ffffbf', '#d9ef8b', '#a6d96a', '#66bd63', '#1a9850', '#006837']
             var labels = [{% for topic in matched_topics %}"{{ loop.index }}",{% endfor %}]
-            var confidence = [{% for topic in matched_topics %}{{ topic[1] - 1 | round() }}, {% endfor %}]
+            var confidence = [{% for topic in matched_topics %}{{ topic[1] | round(4) }}, {% endfor %}]
             var chart_doughnut_settings = {
                 type: 'doughnut',
                 tooltipFillColor: "rgba(51, 51, 51, 0.55)",
