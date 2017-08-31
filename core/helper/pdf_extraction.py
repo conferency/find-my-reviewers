@@ -2,7 +2,7 @@ import json
 
 import os
 
-from core.helper import pdf2string
+from core.helper.pdf2string import pdf2string
 
 
 def generate_path(rootpath):
