@@ -6,7 +6,7 @@ Flask_DebugToolbar==0.10.0
 pytz==2015.7
 textblob==0.12.0
 numpy==1.12.0
-gensim==1.0.1
+gensim
 nltk==3.2.2
 pdfminer==20140328
 SQLAlchemy==1.0.8
