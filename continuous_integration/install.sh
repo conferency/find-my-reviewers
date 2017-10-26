@@ -10,7 +10,7 @@ export PATH=/home/travis/miniconda2/bin:$PATH
 conda update --yes conda
 
 
-conda create --yes -n fmr-test python=2.7 pip atlas flake8 && source activate fmr-test
+conda create --yes -n fmr-test python=2.7 pip atlas flake8 numpy==1.12.0 && source activate fmr-test
 pip install -r requirements.txt
 cd trained
 python download.py
