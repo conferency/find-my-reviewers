@@ -3,7 +3,6 @@ python:
   - "2.7"
 install:
   - sudo apt-get install -y libblas-dev liblapack-dev
-  - pip uninstall boto
   - pip install boto
   - pip install -r requirements.txt
   - cd trained
