@@ -2,6 +2,7 @@ language: python
 python:
   - "2.7"
 install:
+  - sudo apt-get install -y libblas-dev liblapack-dev
   - pip install -r requirements.txt
   - cd trained
   - python download.py
