@@ -7,7 +7,7 @@ from flask import render_template, redirect, request, \
 
 from app.modules.main.errors import page_not_found
 from app.utils.decorators import requires_auth
-from constants import auth0
+from .constants import auth0
 from core.helper.tables import get_top_keywords
 from . import main
 from ...models import *
@@ -119,7 +119,7 @@ def author(database_name, author_id):
 def match():
     return render_template('dashboard/match.html',
                            keyword_dbs=keyword_dbs,
-                           models=models.keys(),
+                           models=list(models.keys()),
                            user=session['profile'])
 
 

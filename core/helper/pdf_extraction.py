@@ -38,8 +38,8 @@ def getkeywords(pdfpath, return_json=False):
         else:
             return d
     except:
-        print 'In this PDF file, no author-provided keywords are found'
-        print 'Path is: %s' % pdfpath
+        print('In this PDF file, no author-provided keywords are found')
+        print('Path is: %s' % pdfpath)
         d = {}
         d['status'] = 'Failure'
         d['keywords'] = None

@@ -12,7 +12,7 @@ def split_on_comma_and_trim(str):
         str_arr.append(s.rstrip().lstrip())
 
     # Delete any empty strings from the list.
-    str_arr = filter(None, str_arr)
+    str_arr = [_f for _f in str_arr if _f]
     return str_arr
 
 
@@ -21,10 +21,10 @@ def byteify(input):
     """
     if isinstance(input, dict):
         return {byteify(key): byteify(value)
-                for key, value in input.iteritems()}
+                for key, value in input.items()}
     elif isinstance(input, list):
         return [byteify(element) for element in input]
-    elif isinstance(input, unicode):
+    elif isinstance(input, str):
         return input.encode('utf-8')
     else:
         return input
