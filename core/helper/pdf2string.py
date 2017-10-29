@@ -72,4 +72,4 @@ def text_blob_tokenise(path):
     except:
         print("Error occurred while parsing: " + path)
     text = clean(text)
-    return text.decode("ascii", "ignore")
+    return text
