@@ -44,6 +44,13 @@ $ python download.py
 $ cd ..
 ```
 
+Install NLTK data:
+
+```
+$ python -m nltk.downloader brown
+$ python -m nltk.downloader punkt
+```
+
 ### Running the server
 
 Initialize web app database:
