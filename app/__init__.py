@@ -40,7 +40,7 @@ def create_app(config_name):
     app.jinja_env.filters['unix_time'] = time.mktime
     app.jinja_env.filters['product_has_sold'] = product_has_sold
 
-    from modules.main import main as main_blueprint
+    from .modules.main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
     from .api import api as api_blueprint

@@ -36,7 +36,7 @@ single_file_max_documents = 10 # the maximum documents per file. Useful when you
 def save_json(target_object, filename):
     with open(filename, 'w') as fp:
         json.dump(target_object, fp)
-    print("INFO: Saved ", filename)
+    print("INFO: Saved", filename)
 
 def save(number_suffix=""):
     global np
@@ -54,9 +54,9 @@ def log(result):
     global tokenised
     tokenised[result[0]] = result[1]
     if len(tokenised) == single_file_max_documents:
-        print("INFO: Exceeded single_file_max_documents: ", single_file_max_documents)
+        print("INFO: Exceeded single_file_max_documents:", single_file_max_documents)
         save(split)
-        print("INFO: Saved to split ", split)
+        print("INFO: Saved to split", split)
         split += 1
         tokenised = {}
 
@@ -76,7 +76,7 @@ def pdf2string(fname, pages=None):
         try:
             interpreter.process_page(page)
         except:
-            print("ERROR: Error while processing a page in " + fname)
+            print("ERROR: Error while processing a page in", fname)
             pass
     infile.close()
     converter.close()
@@ -87,7 +87,7 @@ def pdf2string(fname, pages=None):
 def textblob_tokenise(path, prefix, suffix, mode, noun_phrase=False):
     filepath = prefix + path + suffix
     # filepath = "F:/FMR/aisel.aisnet.org/" + path + "/fulltext.pdf"
-    print("INFO: Processing ", path)
+    print("INFO: Processing", path)
     text = data.loc[path]["title"] + " " + data.loc[path]["abstract"]
     def clean(text):
         return text.replace("<p>", " ").replace("</p>", " ").replace("- ", "").replace("-", "")
@@ -100,7 +100,7 @@ def textblob_tokenise(path, prefix, suffix, mode, noun_phrase=False):
         tokenised = list(TextBlob(clean(text).encode("ascii", "ignore").decode('ascii')).noun_phrases)
     else:
         tokenised = TextBlob(clean(text).encode("ascii", "ignore").decode('ascii')).words
-    print("INFO: ", path, " done.")
+    print("INFO:", path, "done.")
     return path, tokenised
 
 if __name__ == "__main__":

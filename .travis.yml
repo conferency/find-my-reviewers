@@ -11,6 +11,6 @@ dist: trusty
 language: python
 
 python:
-  - "2.7"
+  - "3.6"
 install: source continuous_integration/install.sh
 script: python -m unittest tests.basic tests.googlescholar

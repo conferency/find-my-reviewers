@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from cStringIO import StringIO
+from io import StringIO
 from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
@@ -72,4 +72,4 @@ def text_blob_tokenise(path):
     except:
         print("Error occurred while parsing: " + path)
     text = clean(text)
-    return text.decode("ascii", "ignore")
+    return text
