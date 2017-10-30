@@ -215,7 +215,7 @@ class Reviewer:
             return self.first_name + " " + self.last_name + institution + keywords + "."
         except:
             self.valid = False
-            print "Invalid reviewer found:"
+            print("Invalid reviewer found:")
 
 
 def pdf_match(file_hash, model=None):
@@ -223,7 +223,7 @@ def pdf_match(file_hash, model=None):
     """
     This function is called when a visitor uploaded a PDF file in the landing page.
     It will return a list of Reviewer object using LDA model.
-    
+
     :param file_hash: the hash of the uploaded pdf file.
     :param model: the name of the model to be used.
     :return: a list of Reviewer object.
@@ -231,7 +231,7 @@ def pdf_match(file_hash, model=None):
     if not model:
         model = current_app.config['DEFAULT_LDA_MODEL']
     file_path = os.path.join(current_app.config['UPLOADED_PAPERS_DEST'], file_hash + ".pdf")
-    print("Tokenizing " + file_path)
+    print("Tokenizing", file_path)
     text = text_blob_tokenise(file_path)
     result, matched_topics = match_by_lda(text, model)
     total_list = []
@@ -247,7 +247,7 @@ def text_match(text, model=None):
     """
     This function is called when a visitor entered plain text using our forms in the landing page.
     It will return a list of Reviewer object using LDA model.
-    
+
     :param text: the text user entered.
     :param model: the name of the model to be used.
     :return: a list of Reviewer object.
@@ -287,7 +287,7 @@ def get_rows(total_list):
 
     """
     A helper that splits a list of Reviewers, and generates a list of rows of 3 Reviewers.
-    :param total_list: 
+    :param total_list:
     :return: rows of 3 Reviewers
     """
 

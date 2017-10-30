@@ -23,7 +23,7 @@ def download_file_from_google_drive(file_id, destination):
     if token:
         params = {'id': file_id, 'confirm': token}
         response = session.get(URL, params=params, stream=True)
-    print("Downloading " + destination)
+    print("Downloading", destination)
     save_response_content(response, destination)
 
 
@@ -45,8 +45,8 @@ def save_response_content(response, destination):
 
 
 if __name__ == "__main__":
-    for file_name, file_id in files.iteritems():
+    for file_name, file_id in files.items():
         if exists(file_name):
-            print("File " + file_name + " already exists. Skipping.")
+            print("File", file_name, "already exists. Skipping.")
         else:
             download_file_from_google_drive(file_id, file_name)

@@ -1,7 +1,7 @@
 from flask import request, current_app, jsonify
 from werkzeug.utils import secure_filename
 from . import api
-from errors import bad_request
+from .errors import bad_request
 import os
 import hashlib
 

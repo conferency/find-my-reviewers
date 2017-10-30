@@ -5,7 +5,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from config import config, Config
 import os
 import time
-from utils.macros import format_date_thedaybefore, check_date, format_date, timestamp, product_has_sold
+from .utils.macros import format_date_thedaybefore, check_date, format_date, timestamp, product_has_sold
 import mimetypes
 
 mimetypes.add_type('image/svg+xml', '.svg')
@@ -40,7 +40,7 @@ def create_app(config_name):
     app.jinja_env.filters['unix_time'] = time.mktime
     app.jinja_env.filters['product_has_sold'] = product_has_sold
 
-    from modules.main import main as main_blueprint
+    from .modules.main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
     from .api import api as api_blueprint
