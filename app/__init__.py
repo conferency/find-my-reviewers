@@ -5,7 +5,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from config import config, Config
 import os
 import time
-from utils.macros import format_date_thedaybefore, check_date, format_date, timestamp, product_has_sold
+from .utils.macros import format_date_thedaybefore, check_date, format_date, timestamp, product_has_sold
 import mimetypes
 
 mimetypes.add_type('image/svg+xml', '.svg')
