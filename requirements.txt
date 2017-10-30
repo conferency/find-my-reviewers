@@ -25,5 +25,6 @@ scipy==1.0.0
 six==1.11.0
 smart-open==1.5.3
 SQLAlchemy==1.0.8
+beautifulsoup4
 textblob==0.12.0
 Werkzeug==0.10.4
