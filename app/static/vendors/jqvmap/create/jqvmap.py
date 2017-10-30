@@ -91,7 +91,7 @@ class Converter:
       self.emulate_longitude0 = True
 
     if args.get('viewport'):
-      self.viewport = map(lambda s: float(s), args.get('viewport').split(' '))
+      self.viewport = [float(s) for s in args.get('viewport').split(' ')]
     else:
       self.viewport = False
 
@@ -110,7 +110,7 @@ class Converter:
 
 
   def convert(self, data_source, output_file):
-    codes = map(lambda g: g.properties[self.config['code_field']], data_source.geometries)
+    codes = [g.properties[self.config['code_field']] for g in data_source.geometries]
     main_codes = copy.copy(codes)
     self.map.insets = []
     envelope = []
@@ -160,7 +160,7 @@ class Converter:
 
   def renderMapInset(self, data_source, codes, left, top, width):
     envelope = []
-    geometries = filter(lambda g: g.properties[self.config['code_field']] in codes, data_source.geometries)
+    geometries = [g for g in data_source.geometries if g.properties[self.config['code_field']] in codes]
     for geometry in geometries:
       envelope.append( geometry.geom.envelope )
 
@@ -222,7 +222,7 @@ class GeometryProperty(Variable):
     return set(value).issubset(set(context[self.name]))
 
   def to_python(self, value):
-    return unicode(value[self.name])
+    return str(value[self.name])
 
 
 class DataSource:
@@ -277,7 +277,7 @@ class DataSource:
 
   def create_grammar(self):
     root_table = SymbolTable("root",
-                             map( lambda f: Bind(f['name'], GeometryProperty(f['name'])), self.fields )
+                             [Bind(f['name'], GeometryProperty(f['name'])) for f in self.fields]
                              )
 
     tokens = {
@@ -501,8 +501,8 @@ class Processor:
     new_geometries = []
     for rule in config['rules']:
       expression = data_source.parse_manager.parse( rule['where'] )
-      geometries = filter(lambda g: expression(g.properties), data_source.geometries)
-      geometries = map(lambda g: g.geom, geometries)
+      geometries = [g for g in data_source.geometries if expression(g.properties)]
+      geometries = [g.geom for g in geometries]
       new_geometries.append( Geometry(shapely.ops.cascaded_union( geometries ), rule['fields']) )
     data_source.fields = config['fields']
     data_source.geometries = new_geometries
@@ -516,30 +516,30 @@ class Processor:
       data_col = csv.reader(data_file, delimiter='\t', quotechar='"')
     data = {}
     for row in data_col:
-      row_dict = dict(zip(field_names, row))
+      row_dict = dict(list(zip(field_names, row)))
       data[row_dict.pop(config['on'])] = row_dict
     for geometry in data_source.geometries:
       if geometry.properties[config['on']] in data:
         geometry.properties.update( data[geometry.properties[config['on']]] )
-    field_names = map(lambda f: f['name'], data_source.fields)
-    data_source.fields = data_source.fields + filter(lambda f: f['name'] not in field_names, config['fields'])
+    field_names = [f['name'] for f in data_source.fields]
+    data_source.fields = data_source.fields + [f for f in config['fields'] if f['name'] not in field_names]
 
   def remove(self, config, data_source):
     expression = data_source.parse_manager.parse( config['where'] )
-    data_source.geometries = filter(lambda g: not expression(g.properties), data_source.geometries)
+    data_source.geometries = [g for g in data_source.geometries if not expression(g.properties)]
 
   def remove_fields(self, config, data_source):
-    data_source.fields = filter(lambda f: f.name not in config['fields'], data_source.fields)
+    data_source.fields = [f for f in data_source.fields if f.name not in config['fields']]
 
   def remove_other_fields(self, config, data_source):
-    data_source.fields = filter(lambda f: f['name'] in config['fields'], data_source.fields)
+    data_source.fields = [f for f in data_source.fields if f['name'] in config['fields']]
 
   def buffer(self, config, data_source):
     for geometry in data_source.geometries:
       geometry.geom = geometry.geom.buffer(config['distance'], config['resolution'])
 
   def simplify_adjancent_polygons(self, config, data_source):
-    simple_geometries = PolygonSimplifier( map( lambda g: g.geom, data_source.geometries ) ).simplify()
+    simple_geometries = PolygonSimplifier( [g.geom for g in data_source.geometries] ).simplify()
     for i in range(len(data_source.geometries)):
       data_source.geometries[i].geom = simple_geometries[i]
 
@@ -557,7 +557,7 @@ class Processor:
         polygons = geometry.geom.geoms
       else:
         polygons = [geometry.geom]
-      polygons = filter(lambda p: p.area > config['minimal_area'], polygons)
+      polygons = [p for p in polygons if p.area > config['minimal_area']]
       if len(polygons) > 0:
         geometry.geom = shapely.geometry.multipolygon.MultiPolygon(polygons)
 

@@ -10,7 +10,7 @@ The web app is built on top of `flask` and the LDA model is trained with `gensim
 
 ## Installation
 
-Make sure your Python version is 2.7.x.
+Make sure your Python version is 3.6.x.
 
 ### Environment
 
@@ -42,6 +42,13 @@ Download demo models:
 $ cd trained
 $ python download.py
 $ cd ..
+```
+
+Install NLTK data:
+
+```
+$ python -m nltk.downloader brown
+$ python -m nltk.downloader punkt
 ```
 
 ### Running the server

@@ -51,8 +51,8 @@ def match_by_keyword(input_list, db_name, is_json=False):
             'documents': documents,
         }
         authors[profile['id']] = author
-    print input_list
-    print len(authors)
+    print(input_list)
+    print(len(authors))
     if is_json:
         return json.dumps(authors, default=json_serial)
     else:

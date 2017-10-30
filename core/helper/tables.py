@@ -46,7 +46,7 @@ def get_database(model_name, return_keyword=False):
     where a.id = da.authors_id and d.id = da.documents_id and d.id = dk.documents_id and k.id = dk.keywords_id
     '''
     tmpt = session.execute(Key_Auth)
-    KA = DataFrame(tmpt.fetchall(), columns=tmpt.keys())
+    KA = DataFrame(tmpt.fetchall(), columns=list(tmpt.keys()))
 
     Docu_Auth = '''
     select authors_id, documents_id, first_name, last_name, title
@@ -55,7 +55,7 @@ def get_database(model_name, return_keyword=False):
     '''
 
     tmpt = session.execute(Docu_Auth)
-    DA = DataFrame(tmpt.fetchall(), columns=tmpt.keys())
+    DA = DataFrame(tmpt.fetchall(), columns=list(tmpt.keys()))
 
     Key_Freq = '''
     select keywords.id, keyword, freqency
@@ -63,7 +63,7 @@ def get_database(model_name, return_keyword=False):
     where keywords.id = a.keywords_id
     '''
     a = session.execute(Key_Freq)
-    Keyword = DataFrame(a.fetchall(), columns=a.keys())
+    Keyword = DataFrame(a.fetchall(), columns=list(a.keys()))
     Keyword.index = Keyword.id
 
     DocNum = session.execute('select count(*) from documents').first()[0]
@@ -96,4 +96,4 @@ def get_top_keywords(model_name, author_id, n):
     '''.format(author_id)
 
     tmpt = session.execute(Key_Auth_ID)
-    return DataFrame(tmpt.fetchall(), columns=tmpt.keys())[:n].values.tolist()
+    return DataFrame(tmpt.fetchall(), columns=list(tmpt.keys()))[:n].values.tolist()
