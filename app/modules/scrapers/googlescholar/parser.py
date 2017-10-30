@@ -25,7 +25,7 @@ def toint(s):
 
 
 def crawl(url: str) -> dict:
-    soup = BeautifulSoup(fetch_page(url))
+    soup = BeautifulSoup(fetch_page(url), 'html5lib')
 
     full_name = soup.find('div', id='gsc_prf_in').text
 
