@@ -13,3 +13,4 @@ SQLAlchemy==1.0.8
 flask_sqlalchemy
 flask_uploads
 flask_script
+beautifulsoup4
