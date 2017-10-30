@@ -13,4 +13,4 @@ language: python
 python:
   - "2.7"
 install: source continuous_integration/install.sh
-script: python -m unittest tests.basic
+script: python -m unittest tests.basic tests.googlescholar
