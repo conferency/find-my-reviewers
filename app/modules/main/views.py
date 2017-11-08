@@ -123,6 +123,12 @@ def match():
                            user=session['profile'])
 
 
+@main.route('/dashboard/model/<model_name>/topic/<topic_id>')
+@requires_auth
+def model_topic(model_name, topic_id):
+    # TODO
+    pass
+
 # Auth0
 @main.route('/callback')
 def callback_handling():
