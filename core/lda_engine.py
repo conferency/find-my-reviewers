@@ -34,6 +34,9 @@ class LdaModelWrapper:
             except IOError:
                 return pickle.load(open('trained/' + filename + ".pkl", "rb"))
 
+        def load_paper_lib():
+            return json.load(open('trained/paper_vec_lib.json', "rb"))
+
         self.filename = filename
         self.use_noun_phrases = np  # TODO: let user define if a model is trained with noun phrases
         with app.app_context():
@@ -44,6 +47,7 @@ class LdaModelWrapper:
                 self.num_topics = self.model.num_topics
                 self.num_terms = self.model.num_terms
                 self.authors_lib = load_author_lib()
+                self.papers_lib = load_paper_lib()
                 self.dictionary = Dictionary.load('trained/' + filename + ".dictionary")
                 try:
                     self.html = open('trained/' + filename + ".html").read()
@@ -167,6 +171,53 @@ class LdaModelWrapper:
                 }
                 topics_list.append(topic_map)
         return topics_list
+
+    def get_topic_authors_weights(self, topic_id, ordered=True, top=None):
+        """
+        Gets an OrderedDict containing authors and their weights in the given topic
+        :param topic_id: The topic's ID in the model.
+        :param ordered: Whether to sort the returned dict by weight, in descending order.
+        :param top: Only return top N authors. If this parameter is set, the returned dict will be ordered.
+        :return: An OrderedDict containing authors and their weight in the given topic: {author_id: weight_in_topic, ...}
+        """
+
+        ret = None
+        item_tuples = ((author_id, weights[topic_id]) for author_id, weights in self.authors_lib.items())
+        if ordered or top:
+            item_tuples = sorted(item_tuples, key=lambda item: item[1], reverse=True)
+            if top:
+                item_tuples = item_tuples[:top]
+
+        return OrderedDict(item_tuples)
+
+    def get_articles_weights(self, topic_id, ordered=True, top=None):
+        """
+        Gets an OrderedDict containing papers and their weight in the given topic.\n
+        Papers that are completely unrelated are not included in the returned dict.
+        :param topic_id: The topic's ID in the model.
+        :param ordered: Whether to sort the returned dict by weight, in descending order.
+        :param top: Only return top N papers. If this parameter is set, the returned dict will be ordered.
+        :return: An OrderedDict containing papers and their weights in the given topic: {paper: weight_in_topic, ...}
+        """
+
+        item_tuples = []
+        for paper, confidences in self.papers_lib.items():
+            target_topic_confidence = 0
+            for confidence_item in confidences:
+                if confidence_item[0] != topic_id:
+                    continue
+                target_topic_confidence = confidence_item[1]
+                break
+
+            if target_topic_confidence != 0:
+                item_tuples.append((paper, target_topic_confidence))
+
+        if ordered or top:
+            item_tuples = sorted(item_tuples, key=lambda item: item[1], reverse=True)
+            if top:
+                item_tuples = item_tuples[:top]
+
+        return OrderedDict(item_tuples)
 
 model_files = load_env("lda_models.env")
 models = {model_name: LdaModelWrapper(model_files[model_name]) for model_name in model_files}
