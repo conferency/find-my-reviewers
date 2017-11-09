@@ -8,7 +8,8 @@ files = {
     "demo.ldamodel.expElogbeta.npy": "0B28rFtb9-7L7QnloRWx1V0NpMFE",
     "demo.ldamodel": "0B28rFtb9-7L7eHlvQ3RyZm9WT00",
     "demo.ldamodel.json": "0B28rFtb9-7L7eDZ5YjVOMWlNLWM",
-    "demo.ldamodel.dictionary": "0B28rFtb9-7L7R2tJSE5nYTNQUjA"
+    "demo.ldamodel.dictionary": "0B28rFtb9-7L7R2tJSE5nYTNQUjA",
+    "paper_vec_lib.json": "1bElKCX0omNjITzySjvsj83QZQ75EZ5Fq"
 }
 
 
