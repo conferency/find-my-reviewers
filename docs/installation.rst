@@ -3,7 +3,7 @@
 Installation
 ============
 
-Make sure your Python version is 2.7.x.
+Make sure your Python version is 3.6.x.
 
 Setting up Virtual Environment
 ------------------------------
@@ -28,6 +28,13 @@ Install required packages:
 ::
 
     $ pip install -r requirements.txt
+
+Download and install NLTK dependent data package:
+
+::
+
+    $ python -m nltk.downloader brown
+    $ python -m nltk.downloader punkt
 
 Initialize the tables in the web app database:
 
