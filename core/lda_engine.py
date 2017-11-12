@@ -1,3 +1,4 @@
+import datetime
 import json
 import pickle
 
@@ -6,9 +7,12 @@ from flask import current_app
 from gensim.corpora import Dictionary
 from gensim.models import LdaModel
 from textblob import TextBlob
+from collections import OrderedDict
+from sqlalchemy.orm import sessionmaker
 
 from app import app
 from app.utils.environment import load_env
+from .helper import models
 
 
 class LdaModelWrapper:
@@ -55,6 +59,8 @@ class LdaModelWrapper:
                 except IOError:
                     self.html = None
                 print("LDA model loaded: " + filename + ", " + str(self.num_topics) + " topics.")
+                self.database_engine = models.sdb_connect('databases', 'demo')
+                self.session_maker = sessionmaker(bind=self.database_engine)
             else:
                 print("Skipped LDA model preload: " + filename)
 
@@ -218,6 +224,37 @@ class LdaModelWrapper:
                 item_tuples = item_tuples[:top]
 
         return OrderedDict(item_tuples)
+
+    def get_topic_weights_by_year(self, topic_id, start=None, stop=None):
+        """
+        Gets the weights for every year from `start` tp `stop`, for the given topic.
+        :param start: Starting year (included).
+        :param stop: Stopping year (included).
+        :return: An OrderedDict in ascending order by key `year`: { year: topic_weight_of_year , ... }
+        """
+
+        start = start if start else 0
+        stop = stop if stop else datetime.date.today().year
+
+        year_weight_dict = {}
+        session = self.session_maker()
+        articles_weights = self.get_articles_weights(topic_id, ordered=False)
+        result_proxy = session.execute(
+            '''SELECT submission_path, CAST(SUBSTR(publication_date, 1, 4) AS INTEGER) AS year
+                FROM documents WHERE year BETWEEN :start AND :stop''',
+            {'start': start, 'stop': stop})
+        results = result_proxy.fetchall()
+        results = (x for x in results if x[0] in articles_weights)
+
+        for paper_row in results:
+            year = paper_row[1]
+            paper_weight = articles_weights[paper_row[0]]
+            if year not in year_weight_dict:
+                year_weight_dict[year] = paper_weight
+            else:
+                year_weight_dict[year] += paper_weight
+
+        return OrderedDict(sorted(year_weight_dict.items(), key=lambda item: item[0]))
 
 model_files = load_env("lda_models.env")
 models = {model_name: LdaModelWrapper(model_files[model_name]) for model_name in model_files}

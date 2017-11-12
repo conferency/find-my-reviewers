@@ -123,11 +123,19 @@ def match():
                            user=session['profile'])
 
 
-@main.route('/dashboard/model/<model_name>/topic/<topic_id>')
+@main.route('/dashboard/model/<model_name>/topic/<int:topic_id>')
 @requires_auth
 def model_topic(model_name, topic_id):
-    # TODO
-    pass
+    model = models.get(model_name)
+    if not model:
+        return page_not_found()
+    topic_weights = model.get_topic_weights_by_year(topic_id)
+    topic_string = model.get_topic_in_string(topic_id)
+    return render_template('dashboard/topic_trends.html',
+                           user=session['profile'],
+                           topic_id=topic_id,
+                           topic_weights=topic_weights,
+                           topic_string=topic_string)
 
 # Auth0
 @main.route('/callback')
