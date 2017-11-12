@@ -50,7 +50,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for reviewer_id, reviewer in reviewers.iteritems() %}
+                                    {% for reviewer_id, reviewer in reviewers.items() %}
                                         <tr>
                                             <td>
                                                 <a href="{{ url_for('main.result_author', result_id=result.id, author_id = reviewer_id) }}">{{ reviewer['profile']['first_name'] }} {{ reviewer['profile']['last_name'] }}

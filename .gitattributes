@@ -1,0 +1,3 @@
+tutorials/* linguist-documentation
+docs/* linguist-documentation
+app/static/* linguist-vendored
