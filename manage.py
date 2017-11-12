@@ -41,5 +41,10 @@ def profile(length=25, profile_dir=None):
     app.run()
 
 
+@manager.command
+def runserver():
+    app.run(use_reloader=False)
+
+
 if __name__ == '__main__':
     manager.run()
