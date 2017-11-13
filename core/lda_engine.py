@@ -187,7 +187,6 @@ class LdaModelWrapper:
         :return: An OrderedDict containing authors and their weight in the given topic: {author_id: weight_in_topic, ...}
         """
 
-        ret = None
         item_tuples = ((author_id, weights[topic_id]) for author_id, weights in self.authors_lib.items())
         if ordered or top:
             item_tuples = sorted(item_tuples, key=lambda item: item[1], reverse=True)
