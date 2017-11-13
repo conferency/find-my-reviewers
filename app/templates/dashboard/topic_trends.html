@@ -1,0 +1,81 @@
+{% extends "/dashboard/base.html" %}
+{% block title %}Topic Trends{% endblock %}
+{% block page_content %}
+    <div class="right_col" role="main">
+        <div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title">
+                        <div class="title_left">
+                            <h3>Topic Trends</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+                {% if topic_weights %}
+                    <div class="col-xs-12 col-sm-8">
+                        <div class="x_panel">
+                            <div class="x_content" style="overflow: scroll;">
+                                <canvas id="chart" style="margin: auto;" height="300px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <h4>Topic Keywords</h4>
+                                <p>{{ topic_string }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-12">
+                        <div class="x_panel">
+                            <h4>No data found for the topic #{{ topic_id }}.</h4>
+                            <br/>
+                            <h4>Keywords for This Topic:</h4>
+                            <p>{{ topic_string }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{{ url_for('static', filename='vendors/Chart.js/dist/Chart.min.js') }}"></script>
+    <script>
+        {% if topic_weights %}
+            'use strict';
+            var data = {
+                labels: [{% for year in topic_weights.keys() %}'{{ year }}',{% endfor %}],
+                datasets: [
+                    {
+                        label: 'Topic #{{ topic_id }}',
+                        backgroundColor: '#3CC499',
+                        data: [
+                            {% for weight in topic_weights.values() %}'{{ weight }}',{% endfor %}
+                        ]
+                    }
+                ]
+            };
+            var ctx = document.getElementById('chart').getContext('2d');
+            var stackedBar = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        xAxes: [{
+                            barPercentage: 0.5
+                        }]
+                    }
+                }
+            });
+        {% endif %}
+    </script>
+{% endblock %}
