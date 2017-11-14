@@ -3,45 +3,44 @@
 {% block page_content %}
     <div class="right_col" role="main">
         <div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title">
-                        <div class="title_left">
-                            <h3>Topic Trends</h3>
+            <div class="page-title">
+                <div class="title_left" style="white-space: nowrap;">
+                    <h3>Topic Trends</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8" style="padding-left: 0;">
+                                    {% if topic_weights %}
+                                        <canvas id="chart" height="300px"></canvas>
+                                    {% else %}
+                                        <h4>No data found for this topic.</h4>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-1" style="padding: 0;"></div>
+                                <div class="col-md-3" style="padding-left: 0;">
+                                    <h4>Topic Keywords</h4>
+                                    <p>{{ topic_string }}</p>
+                                </div>
+                            </div>
+                            <div style="margin: 10px 0;"></div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <a href="{{ url_for('main.model_topic', model_name=model_name, topic_id=topic_id - 1) }}" class="btn btn-default"><i class="fa fa-chevron-left" aria-hidden="true"></i>Prev Topic</a>
+                                    <a href="{{ url_for('main.model_topic', model_name=model_name, topic_id=topic_id + 1) }}" class="btn btn-default pull-right">Next Topic <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="clearfix"></div>
-
-            <div class="row">
-                {% if topic_weights %}
-                    <div class="col-xs-12 col-sm-8">
-                        <div class="x_panel">
-                            <div class="x_content" style="overflow: scroll;">
-                                <canvas id="chart" style="margin: auto;" height="300px"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <div class="x_panel">
-                            <div class="x_content">
-                                <h4>Topic Keywords</h4>
-                                <p>{{ topic_string }}</p>
-                            </div>
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="col-12">
-                        <div class="x_panel">
-                            <h4>No data found for the topic #{{ topic_id }}.</h4>
-                            <br/>
-                            <h4>Keywords for This Topic:</h4>
-                            <p>{{ topic_string }}</p>
-                        </div>
-                    </div>
-                {% endif %}
             </div>
         </div>
     </div>
@@ -71,7 +70,7 @@
                     maintainAspectRatio: false,
                     scales: {
                         xAxes: [{
-                            barPercentage: 0.5
+                            barPercentage: 0.4
                         }]
                     }
                 }

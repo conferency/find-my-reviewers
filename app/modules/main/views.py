@@ -157,6 +157,7 @@ def model_topic(model_name, topic_id):
     topic_string = model.get_topic_in_string(topic_id)
     return render_template('dashboard/topic_trends.html',
                            user=session['profile'],
+                           model_name=model_name,
                            topic_id=topic_id,
                            topic_weights=topic_weights,
                            topic_string=topic_string)
