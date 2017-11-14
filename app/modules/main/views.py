@@ -123,6 +123,30 @@ def match():
                            user=session['profile'])
 
 
+@main.route('/dashboard/models')
+@requires_auth
+def explore_models():
+    return render_template('dashboard/models.html',
+                           user=session['profile'],
+                           models=models)
+
+
+@main.route('/dashboard/model/<model_name>')
+@requires_auth
+def model(model_name):
+    top = request.args.get('top', default=5)
+    m = models[model_name]
+    num_topics = m.num_topics
+    topic_keywords_list = []
+    for i in range(num_topics):
+        string = m.get_topic_in_string(i, top=top)
+        topic_keywords_list.append(string)
+    print(topic_keywords_list)
+    return render_template('dashboard/model.html',
+                           user=session['profile'],
+                           model_name=model_name,
+                           topic_keywords_list=topic_keywords_list)
+
 @main.route('/dashboard/model/<model_name>/topic/<int:topic_id>')
 @requires_auth
 def model_topic(model_name, topic_id):
