@@ -53,7 +53,7 @@
                                     {% for reviewer_id, reviewer in reviewers.items() %}
                                         <tr>
                                             <td>
-                                                <a href="{{ url_for('main.result_author', result_id=result.id, author_id = reviewer_id) }}">{{ reviewer['profile']['first_name'] }} {{ reviewer['profile']['last_name'] }}
+                                                <a href="{{ url_for('main.result_author', result_id=result.id, author_id = reviewer_id) }}">{{ reviewer['profile']['first_name'] }} {{ reviewer['profile']['last_name'] }}</a>
                                             </td>
                                             <td class="sorting_desc">{{ reviewer['score'] | round(3) }}</td>
                                             <!-- TODO: add the middle name -->
@@ -61,7 +61,7 @@
                                             <td>{{ reviewer['keywords'] | join(', ') }}</td>
                                             <td>{{ reviewer['profile']['vitae'] }}</td>
                                             <td>
-                                                <a href="{{ url_for('main.result_author', result_id=result.id, author_id = reviewer_id) }}">View
+                                                <a href="{{ url_for('main.result_author', result_id=result.id, author_id = reviewer_id) }}">View</a>
                                             </td>
                                         </tr>
                                     {% endfor %}

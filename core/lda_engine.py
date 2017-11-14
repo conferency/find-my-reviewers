@@ -3,6 +3,7 @@ import json
 import pickle
 
 import numpy as np
+import os
 from flask import current_app
 from gensim.corpora import Dictionary
 from gensim.models import LdaModel
@@ -61,8 +62,23 @@ class LdaModelWrapper:
                 print("LDA model loaded: " + filename + ", " + str(self.num_topics) + " topics.")
                 self.database_engine = models.sdb_connect('databases', 'demo')
                 self.session_maker = sessionmaker(bind=self.database_engine)
+                self.keywords_cache = self.prepare_keywords_cache()
             else:
                 print("Skipped LDA model preload: " + filename)
+
+    def prepare_keywords_cache(self):
+        cache_json = 'trained/keywords_cache.json'
+        if os.path.isfile(cache_json):
+            return json.load(open(cache_json, 'rb'))
+        else:
+            print('Generating keywords cache...')
+            ret = []
+            for i in range(self.num_topics):
+                ret.append([term.strip().split('*') for term in self.model.print_topic(i).split("+")])
+            if len(ret) < self.num_topics:
+                print('Warning: num_topics and actual count of topics retrieved mismatch')
+            json.dump(ret, open(cache_json, 'w'))
+            return ret
 
     def tokenize(self, text):
 
@@ -131,7 +147,7 @@ class LdaModelWrapper:
         :return: A list of terms.
         """
 
-        return [term.strip().split('*') for term in self.model.print_topic(topic_id).split("+")]
+        return self.keywords_cache[topic_id]
 
     def get_topic_in_string(self, topic_id, top=5):
 
