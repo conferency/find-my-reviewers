@@ -14,14 +14,15 @@ from sqlalchemy.orm import sessionmaker
 from app import app
 from app.utils.environment import load_env
 from .helper import models
+import glob
 
 
 class LdaModelWrapper:
-    def __init__(self, filename, force_load=False, np=True, keep_state=True):
+    def __init__(self, model_folder, force_load=False, np=True, keep_state=True):
 
         """Initializes a Gensim LDA model.
 
-        :param filename: The base file name of the model.
+        :param model_folder: The base folder name of the model.
 
         :param force_load: Force the LDA model to be loaded in the memory.
 
@@ -35,39 +36,39 @@ class LdaModelWrapper:
 
         def load_author_lib():
             try:
-                return json.load(open('trained/' + filename + ".json", "rb"))
+                return json.load(open(model_folder + "author_lib.json", "rb"))
             except IOError:
-                return pickle.load(open('trained/' + filename + ".pkl", "rb"))
+                return pickle.load(open(model_folder + "author_lib.pkl", "rb"))
 
         def load_paper_lib():
-            return json.load(open('trained/paper_vec_lib.json', "rb"))
+            return json.load(open(model_folder + 'paper_vec_lib.json', "rb"))
 
-        self.filename = filename
+        self.folder = model_folder
         self.use_noun_phrases = np  # TODO: let user define if a model is trained with noun phrases
         with app.app_context():
             if not current_app.config["LAZYLOAD_LDA"] or force_load:
-                self.model = LdaModel.load('trained/' + filename)
+                self.model = LdaModel.load(model_folder + 'model.ldamodel')
                 if not keep_state:
                     self.model.state = None  # Dispose internal state to save memory
                 self.num_topics = self.model.num_topics
                 self.num_terms = self.model.num_terms
                 self.authors_lib = load_author_lib()
                 self.papers_lib = load_paper_lib()
-                self.dictionary = Dictionary.load('trained/' + filename + ".dictionary")
+                self.dictionary = Dictionary.load(model_folder + "/model.dictionary")
                 try:
-                    self.html = open('trained/' + filename + ".html").read()
+                    self.html = open(model_folder + "/vis.html").read()
                     # TODO: maybe implement a visualization by pyLDAvis
                 except IOError:
                     self.html = None
-                print("LDA model loaded: " + filename + ", " + str(self.num_topics) + " topics.")
-                self.database_engine = models.sdb_connect('databases', 'demo')
+                print("LDA model loaded: " + model_folder + ", " + str(self.num_topics) + " topics.")
+                self.database_engine = models.sdb_connect(model_folder + '/', 'db')
                 self.session_maker = sessionmaker(bind=self.database_engine)
                 self.keywords_cache = self.prepare_keywords_cache()
             else:
-                print("Skipped LDA model preload: " + filename)
+                print("Skipped LDA model preload: " + model_folder)
 
     def prepare_keywords_cache(self):
-        cache_json = 'trained/keywords_cache.json'
+        cache_json = self.folder +'/' + 'models_keywords_cache.json'
         if os.path.isfile(cache_json):
             return json.load(open(cache_json, 'rb'))
         else:
@@ -106,7 +107,7 @@ class LdaModelWrapper:
         """
 
         if not models:
-            self.__init__(self.filename, force_load=True)
+            self.__init__(self.folder, force_load=True)
         vec = self.tokenize(text)
         print("BoW:")
         print(vec)
@@ -271,6 +272,6 @@ class LdaModelWrapper:
 
         return OrderedDict(sorted(year_weight_dict.items(), key=lambda item: item[0]))
 
-model_files = load_env("lda_models.env")
-models = {model_name: LdaModelWrapper(model_files[model_name]) for model_name in model_files}
+model_folders = glob.glob('models/*/')
+models = {model_name.split('/')[-2]: LdaModelWrapper(model_name) for model_name in model_folders if model_name != 'models/resources/'}
 print(models)

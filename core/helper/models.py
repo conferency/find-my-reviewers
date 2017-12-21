@@ -16,7 +16,7 @@ from sqlalchemy.orm import relationship
 # sqlite3's URI form (for Mac) is such: 'sqlite:////absolute/path/to/database'
 
 def sdb_connect(basedir, name='data'):
-    return create_engine('sqlite:///' + os.path.join(basedir, name + '.sqlite'))
+    return create_engine('sqlite:///' + os.path.join(basedir, name.strip('.sqlite') + '.sqlite'))
 
 
 # we get Base from the initializaiton of class declarative_base

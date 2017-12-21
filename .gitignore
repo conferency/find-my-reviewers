@@ -21,11 +21,9 @@ lib64
 __pycache__
 
 # Demo
-trained/*
-databases/*
-!databases/demo*
-!trained/README.md
-!trained/download.py
+models/*
+!models/README.md
+!models/download.py
 
 # Installer logs
 pip-log.txt
