@@ -12,7 +12,7 @@ conda update --yes conda
 
 conda create --yes -n fmr-test python=3.6 pip atlas flake8 numpy==1.12.0 && source activate fmr-test
 pip install -r requirements.txt
-cd trained
+cd models
 python download.py
 cd ..
 python manage.py create_table
