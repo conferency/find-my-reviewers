@@ -1,17 +1,20 @@
 import requests
 from os.path import exists
+from os import mkdir
+import os
+import zipfile
 
 files = {
-    "demo.ldamodel.state.sstats.npy": "0B28rFtb9-7L7emhkM3BiT0U0clU",
-    "demo.ldamodel.state": "0B28rFtb9-7L7UXBkdjVhQ3pKZUU",
-    "demo.ldamodel.id2word": "0B28rFtb9-7L7bEt2b01ROFBuYm8",
-    "demo.ldamodel.expElogbeta.npy": "0B28rFtb9-7L7QnloRWx1V0NpMFE",
-    "demo.ldamodel": "0B28rFtb9-7L7eHlvQ3RyZm9WT00",
-    "demo.ldamodel.json": "0B28rFtb9-7L7eDZ5YjVOMWlNLWM",
-    "demo.ldamodel.dictionary": "0B28rFtb9-7L7R2tJSE5nYTNQUjA",
+    "model.ldamodel.state.sstats.npy": "0B28rFtb9-7L7emhkM3BiT0U0clU",
+    "model.ldamodel.state": "0B28rFtb9-7L7UXBkdjVhQ3pKZUU",
+    "model.ldamodel.id2word": "0B28rFtb9-7L7bEt2b01ROFBuYm8",
+    "model.ldamodel.expElogbeta.npy": "0B28rFtb9-7L7QnloRWx1V0NpMFE",
+    "model.ldamodel": "0B28rFtb9-7L7eHlvQ3RyZm9WT00",
+    "model.ldamodel.json": "0B28rFtb9-7L7eDZ5YjVOMWlNLWM",
+    "model.dictionary": "0B28rFtb9-7L7R2tJSE5nYTNQUjA",
+    "author_lib.json.zip": "1KxYQIDSr9ZTz3FfFJXDeqnS5qmEg9PJS",
     "paper_vec_lib.json": "1bElKCX0omNjITzySjvsj83QZQ75EZ5Fq"
 }
-
 
 def download_file_from_google_drive(file_id, destination):
     URL = "https://docs.google.com/uc?export=download"
@@ -46,8 +49,12 @@ def save_response_content(response, destination):
 
 
 if __name__ == "__main__":
+    mkdir('demo')
     for file_name, file_id in files.items():
         if exists(file_name):
             print("File", file_name, "already exists. Skipping.")
         else:
-            download_file_from_google_drive(file_id, file_name)
+            download_file_from_google_drive(file_id, os.path.join('demo', file_name))
+    if exists('author_lib.json.zip'):
+        z = zipfile.ZipFile('author_lib.json.zip')
+        z.extractall(path='demo/')
