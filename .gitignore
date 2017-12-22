@@ -83,3 +83,5 @@ data-dev.sqlite
 
 /docs/_build/
 /prod/
+
+tutorial/.ipynb_checkpoints
