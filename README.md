@@ -39,7 +39,7 @@ $ pip install -r requirements.txt
 Download demo models:
 
 ```
-$ cd trained
+$ cd models
 $ python download.py
 $ cd ..
 ```
