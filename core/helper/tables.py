@@ -2,7 +2,6 @@
 # import pandas as pd
 import numpy as np
 import os
-from core.lda_engine import model_folders
 from pandas import DataFrame
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
