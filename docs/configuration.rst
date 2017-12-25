@@ -51,32 +51,19 @@ LDA Models
 
 A working LDA model is composed with the following components:
 
-1. Trained LDA model (``.ldamodel`` file and its companions) generated
+1. Trained LDA model (``model.ldamodel`` file and its companions, see :ref:`Trained LDA model`) generated
    by ``gensim``.
-2. Author profile vector library. (a JSON file ``.ldamodel.json`` that
+2. Author profile vector library. (a JSON file ``author_lib.json`` that
    stores the LDA topics vectors of each authors in the database).
-3. Corresponding paper database.
+3. Corresponding paper and author database. (``db.sqlite``)
+4. Predicted paper vector library. (``paper_vec_lib.json``)
+
+A complete LDA model should have all the above files placed in a dedicated folder in ``/models/``.
 
 Trained LDA model
 ^^^^^^^^^^^^^^^^^
 
-To load your pre-trained LDA models, specify your models in
-``lda_models.env``.
-
-The ``lda_models.env`` file should look like:
-
-::
-
-    Financial Times Top 50 (300)=fintime50_300.ldamodel
-    Association of Information System (300)=aisnet_300.ldamodel
-    Association of Information System (500)=aisnet_500.ldamodel
-
-(The number in the bracket indicates the number of topics in the model.
-It is not a required syntax.)
-
-Findmyreviwers will load ``fintime50_300.ldamodel``,
-``aisnet_300.ldamodel`` and ``aisnet_500.ldamodel`` under the
-``trained`` directory.
+To load your pre-trained LDA models, simply place your model folder in ``/models/``.
 
 For each ``.ldamodel`` file, it should have the following companions:
 
@@ -102,12 +89,10 @@ Paper Databases
 ^^^^^^^^^^^^^^^
 
 The LDA model also relies on a paper database to give details of the
-matching results. Findmyreviwers will automatically find the database in
-the ``databases`` directory.
+matching results. Findmyreviwers will try to find the database (``db.sqlite``) in your model directory.
 
-For example, the model ``fintime50_300.ldamodel`` will correspond to
-``fintime50_300.sqlite`` in the ``databases``
-directory.
+For example, the model ``demo`` will correspond to
+``models/demo/db.sqlite``.
 
 The database shares exactly the same schema with paper databases that
 are used for keyword-based algorithm.

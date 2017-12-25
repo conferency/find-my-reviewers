@@ -1,8 +1,6 @@
 import json
 from datetime import datetime
-
 from pandas import Series
-
 from core.helper.tables import get_database
 
 
@@ -57,4 +55,3 @@ def match_by_keyword(input_list, db_name, is_json=False):
         return json.dumps(authors, default=json_serial)
     else:
         return authors
-

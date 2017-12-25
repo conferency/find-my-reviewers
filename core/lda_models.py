@@ -8,9 +8,9 @@ model_files = load_env('lda_models.env')
 
 def load_file(model_name):
     try:
-        return json.load(open('trained/' + model_files[model_name] + ".json", "rb"))
+        return json.load(open('models' + model_files[model_name] + ".json", "rb"))
     except:
-        return pickle.load(open('trained/' + model_files[model_name] + ".pkl", "rb"))
+        return pickle.load(open('models' + model_files[model_name] + ".pkl", "rb"))
 
 
 def load_author_libs():

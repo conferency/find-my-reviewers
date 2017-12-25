@@ -5,7 +5,7 @@ cache:
   directories:
   - $HOME/.cache/pip
   - $HOME/.ccache
-  - trained
+  - models
 
 dist: trusty
 language: python

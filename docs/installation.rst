@@ -51,10 +51,10 @@ To download the demo models, in the ``trained`` folder, run:
 
 ::
 
-    $ cd trained
+    $ cd models
     $ python download.py
 
-For detailed change log of our trained model, see ``trained/README.md``.
+For detailed change log of our trained model, see ``models/README.md``.
 
 All the files are available `HERE <https://drive.google.com/drive/folders/0B28rFtb9-7L7SzRFY19pNVVidG8?usp=sharing>`_.
 

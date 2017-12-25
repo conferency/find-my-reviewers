@@ -2,18 +2,17 @@
 # import pandas as pd
 import numpy as np
 import os
-from core.lda_engine import model_files
 from pandas import DataFrame
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from core.keyword_db import keyword_dbs
 
 
-def db_connect(base, model_name='dss'):
+def db_connect(model_folder):
     try:
-        path = 'sqlite:///' + os.path.join(os.getcwd(), base, keyword_dbs[model_name] + '.sqlite')
+        path = 'sqlite:///' + os.path.join(os.getcwd(), model_folder, 'db.sqlite')
     except KeyError:
-        path = 'sqlite:///' + os.path.join(os.getcwd(), base, model_files[model_name].split(".")[0] + '.sqlite')
+        path = 'sqlite:///' + os.path.join(os.getcwd(), model_folder, 'db.sqlite')
     print("Connecting to: ", path)
     return create_engine(path)
 
@@ -24,7 +23,7 @@ def toDataFrame(sql, session):
 
 
 def get_database(model_name, return_keyword=False):
-    engine = db_connect("databases", model_name=model_name)
+    engine = db_connect('models/' + model_name)
     Session = sessionmaker(bind=engine)
     session = Session()
     doc = "select * from documents"

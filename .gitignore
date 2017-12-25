@@ -21,11 +21,9 @@ lib64
 __pycache__
 
 # Demo
-trained/*
-databases/*
-!databases/demo*
-!trained/README.md
-!trained/download.py
+models/*
+!models/README.md
+!models/download.py
 
 # Installer logs
 pip-log.txt
@@ -85,3 +83,5 @@ data-dev.sqlite
 
 /docs/_build/
 /prod/
+
+tutorial/.ipynb_checkpoints
